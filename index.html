@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="description" content="AI StudyMate - an interactive AI-powered study companion by K. Thrisha Reddy.">
+  <title>AI StudyMate — Learn Smarter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="background"><div class="orb one"></div><div class="orb two"></div><div class="orb three"></div></div>
+
+  <div id="toast" class="toast"></div>
+
+  <section id="authScreen" class="auth-screen">
+    <div class="auth-brand"><span class="brand-mark"><i class="fa-solid fa-brain"></i></span><span>AI<span>StudyMate</span></span></div>
+    <div class="auth-card">
+      <div class="auth-copy">
+        <span class="eyebrow">YOUR INTELLIGENT STUDY COMPANION</span>
+        <h1>Study smarter.<br><span class="gradient-text">Learn faster.</span></h1>
+        <p>Ask your AI tutor questions, build your own subjects and tasks, practice flashcards, take quizzes and track real progress.</p>
+        <div class="mini-points"><span><i class="fa-solid fa-check"></i> Your data is saved</span><span><i class="fa-solid fa-check"></i> Personal dashboard</span><span><i class="fa-solid fa-check"></i> 24+ flashcards</span></div>
+      </div>
+      <div class="auth-form-wrap">
+        <div class="auth-tabs"><button class="auth-tab active" data-auth="login">Login</button><button class="auth-tab" data-auth="register">Create account</button></div>
+        <form id="loginForm" class="auth-form">
+          <label>Email<input id="loginEmail" type="email" required placeholder="you@example.com"></label>
+          <label>Password<input id="loginPassword" type="password" required placeholder="••••••••"></label>
+          <button class="primary-btn full" type="submit">Login <i class="fa-solid fa-arrow-right"></i></button>
+        </form>
+        <form id="registerForm" class="auth-form hidden">
+          <label>Your name<input id="regName" required placeholder="K. Thrisha Reddy"></label>
+          <label>Email<input id="regEmail" type="email" required placeholder="you@example.com"></label>
+          <label>Password<input id="regPassword" type="password" minlength="6" required placeholder="At least 6 characters"></label>
+          <button class="primary-btn full" type="submit">Create my StudyMate <i class="fa-solid fa-sparkles"></i></button>
+        </form>
+        <p id="authError" class="form-error"></p>
+      </div>
+    </div>
+    <div class="developer-corner">K. Thrisha Reddy</div>
+  </section>
+
+  <div id="app" class="app hidden">
+    <header class="navbar">
+      <a class="logo" href="#dashboard"><span class="logo-icon"><i class="fa-solid fa-brain"></i></span><span>AI<span class="gradient-text">StudyMate</span></span></a>
+      <nav class="nav-links">
+        <button data-page="dashboard" class="active">Dashboard</button>
+        <button data-page="tutor">AI Tutor</button>
+        <button data-page="subjects">Subjects</button>
+        <button data-page="tasks">Tasks</button>
+        <button data-page="flashcards">Flashcards</button>
+        <button data-page="quiz">Quiz</button>
+        <button data-page="progress">Progress</button>
+      </nav>
+      <div class="nav-user"><span id="userInitial">T</span><button id="logoutBtn" title="Logout"><i class="fa-solid fa-right-from-bracket"></i></button></div>
+      <button id="mobileMenuBtn" class="icon-btn"><i class="fa-solid fa-bars"></i></button>
+    </header>
+
+    <aside id="mobileNav" class="mobile-nav">
+      <button data-page="dashboard">Dashboard</button><button data-page="tutor">AI Tutor</button><button data-page="subjects">Subjects</button><button data-page="tasks">Tasks</button><button data-page="flashcards">Flashcards</button><button data-page="quiz">Quiz</button><button data-page="progress">Progress</button>
+    </aside>
+
+    <main class="main">
+      <section id="page-dashboard" class="page active-page">
+        <div class="page-head"><div><span class="eyebrow">PERSONAL DASHBOARD</span><h2>Good <span id="greeting">day</span>, <span id="userName">Thrisha</span> 👋</h2><p>Everything you need for a focused study session.</p></div><button id="quickAsk" class="primary-btn">Ask AI <i class="fa-solid fa-sparkles"></i></button></div>
+        <div class="stat-grid">
+          <article class="stat-box"><span class="stat-icon purple"><i class="fa-regular fa-clock"></i></span><div><small>Study time</small><strong id="statStudy">0m</strong></div></article>
+          <article class="stat-box"><span class="stat-icon blue"><i class="fa-solid fa-list-check"></i></span><div><small>Task completion</small><strong id="statTasks">0%</strong></div></article>
+          <article class="stat-box"><span class="stat-icon green"><i class="fa-solid fa-fire"></i></span><div><small>Study streak</small><strong id="statStreak">0 days</strong></div></article>
+          <article class="stat-box"><span class="stat-icon orange"><i class="fa-solid fa-chart-line"></i></span><div><small>Quiz average</small><strong id="statQuiz">0%</strong></div></article>
+        </div>
+        <div class="dashboard-grid">
+          <article class="panel">
+            <div class="panel-head"><div><span class="eyebrow">TODAY</span><h3>Your study tasks</h3></div><button class="text-btn" data-page="tasks">Manage <i class="fa-solid fa-arrow-right"></i></button></div>
+            <div id="dashTasks" class="task-list"></div>
+          </article>
+          <article class="panel insight-panel">
+            <div class="ai-orb"><i class="fa-solid fa-sparkles"></i></div><span class="eyebrow">AI INSIGHT</span><h3 id="insightTitle">Personalized guidance</h3><p id="insightText">Your study insights will appear here after you add some tasks and sessions.</p><button id="insightBtn" class="secondary-btn">Generate insight</button>
+          </article>
+        </div>
+        <div class="dashboard-grid lower">
+          <article class="panel"><div class="panel-head"><div><span class="eyebrow">SUBJECTS</span><h3>Learning areas</h3></div><button class="text-btn" data-page="subjects">Edit</button></div><div id="dashSubjects" class="subject-mini-grid"></div></article>
+          <article class="panel"><div class="panel-head"><div><span class="eyebrow">FOCUS</span><h3>Quick focus timer</h3></div></div><div class="timer-inline"><strong id="dashTimer">25:00</strong><button id="dashTimerBtn" class="primary-btn">Start</button></div></article>
+        </div>
+        <div class="dashboard-grid lower">
+          <article class="panel"><div class="panel-head"><div><span class="eyebrow">QUICK ACTIONS</span><h3>Start studying</h3></div></div><div class="quick-actions"><button class="secondary-btn" data-page="tutor"><i class="fa-solid fa-sparkles"></i> Ask AI</button><button class="secondary-btn" data-page="tasks"><i class="fa-solid fa-list-check"></i> Add task</button><button class="secondary-btn" data-page="flashcards"><i class="fa-solid fa-layer-group"></i> Practice cards</button><button class="secondary-btn" data-page="quiz"><i class="fa-solid fa-circle-question"></i> Take quiz</button></div></article>
+          <article class="panel"><div class="panel-head"><div><span class="eyebrow">RECENT ACTIVITY</span><h3>Your progress</h3></div><button class="text-btn" data-page="progress">View all</button></div><div id="dashActivity" class="activity-list"></div></article>
+        </div>
+      </section>
+
+      <section id="page-tutor" class="page">
+        <div class="page-head"><div><span class="eyebrow">AI LEARNING</span><h2>Your <span class="gradient-text">AI Tutor</span></h2><p>Ask questions, request examples, simplify concepts or get step-by-step help.</p></div></div>
+        <div class="tutor-layout">
+          <div class="panel chat-panel">
+            <div id="chatMessages" class="chat-messages"><div class="chat-bubble ai"><span class="chat-avatar"><i class="fa-solid fa-sparkles"></i></span><div><strong>AI StudyMate</strong><p>Hi! I'm your AI tutor. What would you like to learn today?</p></div></div></div>
+            <form id="chatForm" class="chat-form"><textarea id="chatInput" rows="2" placeholder="Ask: Explain normalization with a simple example..." required></textarea><button class="primary-btn" type="submit"><i class="fa-solid fa-paper-plane"></i></button></form>
+            <div class="suggestions"><button>Explain recursion simply</button><button>Give me a Python example</button><button>Quiz me on DBMS</button></div>
+          </div>
+          <aside class="panel tutor-side"><span class="eyebrow">TRY ASKING</span><button data-ask="Explain this concept step by step with an example.">Explain a concept</button><button data-ask="Give me a short revision note for this topic.">Make revision notes</button><button data-ask="Give me 5 practice questions and answers.">Practice questions</button><button data-ask="Teach me this topic as if I am a beginner.">Teach like a beginner</button><div id="aiStatus" class="live-badge"><i class="fa-solid fa-circle"></i> Checking AI connection...</div></aside>
+        </div>
+      </section>
+
+      <section id="page-subjects" class="page">
+        <div class="page-head"><div><span class="eyebrow">ORGANIZE LEARNING</span><h2>My <span class="gradient-text">Subjects</span></h2><p>Add only the subjects you actually study. You can delete them anytime.</p></div><button id="addSubjectBtn" class="primary-btn"><i class="fa-solid fa-plus"></i> Add subject</button></div>
+        <div id="subjectsGrid" class="cards-grid"></div>
+      </section>
+
+      <section id="page-tasks" class="page">
+        <div class="page-head"><div><span class="eyebrow">YOUR PLAN</span><h2>Today's <span class="gradient-text">Tasks</span></h2><p>Nothing is pre-filled. You decide what you want to accomplish.</p></div><button id="addTaskBtn" class="primary-btn"><i class="fa-solid fa-plus"></i> Add task</button></div>
+        <div id="tasksList" class="task-page-list"></div>
+      </section>
+
+      <section id="page-flashcards" class="page">
+        <div class="page-head"><div><span class="eyebrow">ACTIVE RECALL</span><h2>Smart <span class="gradient-text">Flashcards</span></h2><p>Flip, revise and repeat. Your account starts with 24+ cards and you can add more.</p></div><button id="addFlashcardBtn" class="primary-btn"><i class="fa-solid fa-plus"></i> Add card</button></div>
+        <div class="flash-toolbar"><select id="flashSubjectFilter"><option value="all">All subjects</option></select><span id="flashCount"></span></div>
+        <div class="flash-stage"><button id="prevCard" class="round-btn"><i class="fa-solid fa-chevron-left"></i></button><div id="flashcard" class="flashcard"><div class="flash-inner"><div class="flash-face front"><span class="eyebrow">QUESTION</span><h3 id="flashFront">Loading...</h3><small>Click to flip</small></div><div class="flash-face back"><span class="eyebrow">ANSWER</span><p id="flashBack"></p><small>Click to flip back</small></div></div></div><button id="nextCard" class="round-btn"><i class="fa-solid fa-chevron-right"></i></button></div>
+        <div class="flash-bottom"><span id="flashPosition">1 / 1</span><button id="shuffleCards" class="secondary-btn"><i class="fa-solid fa-shuffle"></i> Shuffle</button></div>
+      </section>
+
+      <section id="page-quiz" class="page">
+        <div class="page-head"><div><span class="eyebrow">TEST YOURSELF</span><h2>Knowledge <span class="gradient-text">Quiz</span></h2><p>Take a 10-question quiz and save your score to your progress.</p></div><button id="newQuizBtn" class="primary-btn"><i class="fa-solid fa-rotate"></i> New quiz</button></div>
+        <div id="quizArea" class="panel quiz-panel"></div>
+      </section>
+
+      <section id="page-progress" class="page">
+        <div class="page-head"><div><span class="eyebrow">YOUR JOURNEY</span><h2>Study <span class="gradient-text">Progress</span></h2><p>See the results of the work you actually completed.</p></div></div>
+        <div class="progress-grid">
+          <article class="panel big-progress"><span class="eyebrow">TASK COMPLETION</span><strong id="progressPercent">0%</strong><div class="progress-track"><span id="progressFill"></span></div><p>Complete tasks you create to increase this score.</p></article>
+          <article class="panel"><span class="eyebrow">QUIZ HISTORY</span><div id="quizHistory" class="history-list"></div></article>
+          <article class="panel"><span class="eyebrow">RECENT STUDY SESSIONS</span><div id="sessionHistory" class="history-list"></div></article>
+        </div>
+      </section>
+    </main>
+
+    <footer><div>AI StudyMate</div><span>Designed & Developed by <strong>K. Thrisha Reddy</strong></span><span>B.Tech CSE — Data Science</span></footer>
+
+    <div class="developer-corner">K. Thrisha Reddy</div>
+  </div>
+
+  <div id="modal" class="modal hidden"><div class="modal-backdrop"></div><div class="modal-card"><button id="modalClose" class="modal-close"><i class="fa-solid fa-xmark"></i></button><div id="modalContent"></div></div></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
